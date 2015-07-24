@@ -51,6 +51,7 @@ public class PocketSphinxActivity extends Activity implements
         RecognitionListener {
 		
     /* Named searches allow to quickly reconfigure the decoder */
+    // testing git
     private static final String KWS_SEARCH = "wakeup";
     private static final String FORECAST_SEARCH = "forecast";
     private static final String DIGITS_SEARCH = "digits";
