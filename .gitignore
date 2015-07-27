@@ -6,3 +6,5 @@
 /build
 *.md5
 *.lst
+
+.idea/workspace.xml
