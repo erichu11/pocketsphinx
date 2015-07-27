@@ -8,3 +8,4 @@
 *.lst
 
 .idea/workspace.xml
+*.xml
