@@ -47,7 +47,7 @@ import edu.cmu.pocketsphinx.Hypothesis;
 import edu.cmu.pocketsphinx.RecognitionListener;
 import edu.cmu.pocketsphinx.SpeechRecognizer;
 
-public class PocketSphinxActivity extends Activity implements
+public class OfflineActivity extends Activity implements
         RecognitionListener {
 		
     /* Named searches allow to quickly reconfigure the decoder */
@@ -66,7 +66,7 @@ public class PocketSphinxActivity extends Activity implements
         // Prepare the data for UI
         captions = new HashMap<String, Integer>();
         captions.put(DIGITS_SEARCH, R.string.digits_caption);
-        setContentView(R.layout.main);
+        setContentView(R.layout.activity_offline);
         ((TextView) findViewById(R.id.caption_text))
                 .setText("Preparing the recognizer");
 
@@ -77,7 +77,7 @@ public class PocketSphinxActivity extends Activity implements
             @Override
             protected Exception doInBackground(Void... params) {
                 try {
-                    Assets assets = new Assets(PocketSphinxActivity.this);
+                    Assets assets = new Assets(OfflineActivity.this);
                     File assetDir = assets.syncAssets();
                     setupRecognizer(assetDir);
                 } catch (IOException e) {
