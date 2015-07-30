@@ -9,3 +9,6 @@
 
 .idea/workspace.xml
 *.xml
+*.lock
+.idea/workspace.xml
+*.bin
