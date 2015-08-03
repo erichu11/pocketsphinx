@@ -7,8 +7,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import edu.cmu.pocketsphinx.demo.R;
-
 public class MainActivity extends Activity {
 
     @Override
@@ -46,6 +44,11 @@ public class MainActivity extends Activity {
 
     public void serverMode(View view) {
         Intent intent = new Intent(this, ServerActivity.class);
+        startActivity(intent);
+    }
+
+    public void audioMode(View view) {
+        Intent intent = new Intent(this, AudioActivity.class);
         startActivity(intent);
     }
 }

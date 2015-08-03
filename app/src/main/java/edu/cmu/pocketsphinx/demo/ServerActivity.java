@@ -58,7 +58,7 @@ public class ServerActivity extends Activity {
                         // release
                         recording = false;
 
-                        return true;
+                        return false;
                     }
                     default:
                         return false;
@@ -102,14 +102,14 @@ public class ServerActivity extends Activity {
             BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(outputStream);
             DataOutputStream dataOutputStream = new DataOutputStream(bufferedOutputStream);
 
-            int minBufferSize = AudioRecord.getMinBufferSize(16000,
+            int minBufferSize = AudioRecord.getMinBufferSize(11025,
                     AudioFormat.CHANNEL_CONFIGURATION_MONO,
                     AudioFormat.ENCODING_PCM_16BIT);
 
             short[] audioData = new short[minBufferSize];
 
             AudioRecord audioRecord = new AudioRecord(MediaRecorder.AudioSource.MIC,
-                    16000,
+                    11025,
                     AudioFormat.CHANNEL_CONFIGURATION_MONO,
                     AudioFormat.ENCODING_PCM_16BIT,
                     minBufferSize);

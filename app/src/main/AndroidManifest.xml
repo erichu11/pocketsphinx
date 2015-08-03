@@ -9,10 +9,10 @@
         android:targetSdkVersion="20" />
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-
-    <android:uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <android:uses-permission
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission
         android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="18" />
 
@@ -36,6 +36,10 @@
         <activity
             android:name=".ServerActivity"
             android:label="@string/title_activity_server" >
+        </activity>
+        <activity
+            android:name=".AudioActivity"
+            android:label="@string/title_activity_audio" >
         </activity>
     </application>
 
