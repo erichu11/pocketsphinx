@@ -12,3 +12,4 @@
 *.lock
 .idea/workspace.xml
 *.bin
+*.xml

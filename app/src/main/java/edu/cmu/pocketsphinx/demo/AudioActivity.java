@@ -116,7 +116,7 @@ public class AudioActivity extends Activity implements View.OnClickListener {
             isPlaying = true;
 
             int bufferSize = AudioTrack.getMinBufferSize(frequency, channelConfiguration, audioEncoding);
-            short[] audiodata = new short[bufferSize / 4];
+            byte[] audiodata = new byte[bufferSize];
 
             try {
                 DataInputStream dis = new DataInputStream(new BufferedInputStream(new FileInputStream(recordingFile)));
@@ -126,10 +126,11 @@ public class AudioActivity extends Activity implements View.OnClickListener {
                         AudioTrack.MODE_STREAM);
 
                 audioTrack.play();
+
                 while (isPlaying && dis.available() > 0) {
                     int i = 0;
                     while (dis.available() > 0 && i < audiodata.length) {
-                        audiodata[i] = dis.readShort();
+                        audiodata[i] = dis.readByte();
                         i++;
                     }
                     audioTrack.write(audiodata, 0, audiodata.length);
@@ -156,14 +157,14 @@ public class AudioActivity extends Activity implements View.OnClickListener {
                         MediaRecorder.AudioSource.MIC, frequency,
                         channelConfiguration, audioEncoding, bufferSize);
 
-                short[] buffer = new short[bufferSize];
+                byte[] buffer = new byte[bufferSize];
                 audioRecord.startRecording();
                 int r = 0;
                 while (isRecording) {
                     int bufferReadResult = audioRecord.read(buffer, 0,
                             bufferSize);
                     for (int i = 0; i < bufferReadResult; i++) {
-                        dos.writeShort(buffer[i]);
+                        dos.writeByte(buffer[i]);
                     }
                     publishProgress(new Integer(r));
                     r++;
