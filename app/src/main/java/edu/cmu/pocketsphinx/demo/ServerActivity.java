@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -25,6 +26,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.Socket;
 
 public class ServerActivity extends Activity {
     private Button record;
@@ -192,6 +194,22 @@ public class ServerActivity extends Activity {
                     audioTrack.write(audiodata, 0, audiodata.length);
                 }
                 dis.close();
+
+                Socket socket = new Socket("192.168.1.5",7000);
+                DataOutputStream dOut = new DataOutputStream(socket.getOutputStream());
+
+                dOut.writeInt(audiodata.length); // write length of the message
+                dOut.write(audiodata);           // write the message
+                System.out.println("Sent to server");
+
+                DataInputStream fromServer = new DataInputStream(socket.getInputStream());
+                String s = fromServer.readUTF();
+                System.out.println(s);
+
+                Toast.makeText(getApplicationContext(), s,
+                        Toast.LENGTH_SHORT).show();
+
+
 
             } catch (Throwable t) {
                 Log.e("AudioTrack", "Playback Failed");
