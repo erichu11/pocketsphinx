@@ -76,9 +76,7 @@ public class ServerActivity extends Activity {
                         record.setText("Hold to record");
                         // release
                         recording = false;
-
-                        playTask = new PlayAudio();
-                        playTask.execute();
+                        Server();
 
                         return false;
                     }
@@ -169,9 +167,7 @@ public class ServerActivity extends Activity {
         }
     }
 
-    private class PlayAudio extends AsyncTask<Void, Integer, Void> {
-        @Override
-        protected Void doInBackground(Void... params) {
+    private void Server()  {
 
 
             byte[] audiodata = new byte[(int)(recordingFile.length())];
@@ -199,16 +195,14 @@ public class ServerActivity extends Activity {
 
                 DataInputStream fromServer = new DataInputStream(socket.getInputStream());
                 String s = fromServer.readUTF();
-                changeText(s);
+                text.setText(s);
 
 
 
             } catch (Throwable t) {
                 Log.e("AudioTrack", "Playback Failed");
             }
-            return null;
         }
-    }
 
     private void changeText(String s){
         text.setText(s);
