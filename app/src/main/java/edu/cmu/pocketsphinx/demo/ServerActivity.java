@@ -16,7 +16,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -30,6 +30,7 @@ import java.net.Socket;
 
 public class ServerActivity extends Activity {
     private Button record;
+    private TextView text;
     boolean recording=false;
 
     RecordAudio recordTask;
@@ -46,6 +47,7 @@ public class ServerActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_server);
+        text=(TextView)this.findViewById(R.id.textview_speech);
         record = (Button) this.findViewById(R.id.button_record);
         record.setBackgroundColor(Color.GRAY);
         record.setOnTouchListener(new View.OnTouchListener() {
@@ -205,10 +207,7 @@ public class ServerActivity extends Activity {
 
                 DataInputStream fromServer = new DataInputStream(socket.getInputStream());
                 String s = fromServer.readUTF();
-                System.out.println(s);
-
-                Toast.makeText(getApplicationContext(), s,
-                        Toast.LENGTH_SHORT).show();
+                changeText(s);
 
 
 
@@ -217,5 +216,9 @@ public class ServerActivity extends Activity {
             }
             return null;
         }
+    }
+
+    private void changeText(String s){
+        text.setText(s);
     }
 }
