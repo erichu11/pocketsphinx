@@ -3,9 +3,7 @@ package edu.cmu.pocketsphinx.demo;
 import android.app.Activity;
 import android.graphics.Color;
 import android.media.AudioFormat;
-import android.media.AudioManager;
 import android.media.AudioRecord;
-import android.media.AudioTrack;
 import android.media.MediaRecorder;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -175,17 +173,12 @@ public class ServerActivity extends Activity {
         @Override
         protected Void doInBackground(Void... params) {
 
-            int bufferSize = AudioTrack.getMinBufferSize(frequency, channelConfiguration, audioEncoding);
-            byte[] audiodata = new byte[bufferSize];
+
+            byte[] audiodata = new byte[(int)(recordingFile.length())];
 
             try {
                 DataInputStream dis = new DataInputStream(new BufferedInputStream(new FileInputStream(recordingFile)));
-                AudioTrack audioTrack = new AudioTrack(
-                        AudioManager.STREAM_MUSIC, frequency,
-                        channelConfiguration, audioEncoding, bufferSize,
-                        AudioTrack.MODE_STREAM);
 
-                audioTrack.play();
 
                 while ( dis.available() > 0) {
                     int i = 0;
@@ -193,7 +186,6 @@ public class ServerActivity extends Activity {
                         audiodata[i] = dis.readByte();
                         i++;
                     }
-                    audioTrack.write(audiodata, 0, audiodata.length);
                 }
                 dis.close();
 
