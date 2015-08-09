@@ -32,7 +32,6 @@ public class ServerActivity extends Activity {
     boolean recording=false;
 
     RecordAudio recordTask;
-    PlayAudio playTask;
     File recordingFile;
 
     int frequency = 16000,channelConfiguration = AudioFormat.CHANNEL_CONFIGURATION_MONO;
