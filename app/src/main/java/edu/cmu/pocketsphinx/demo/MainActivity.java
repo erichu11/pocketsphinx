@@ -47,8 +47,4 @@ public class MainActivity extends Activity {
         startActivity(intent);
     }
 
-    public void audioMode(View view) {
-        Intent intent = new Intent(this, AudioActivity.class);
-        startActivity(intent);
-    }
 }

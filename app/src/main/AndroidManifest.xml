@@ -39,10 +39,6 @@
             android:name=".ServerActivity"
             android:label="@string/title_activity_server" >
         </activity>
-        <activity
-            android:name=".AudioActivity"
-            android:label="@string/title_activity_audio" >
-        </activity>
     </application>
 
 </manifest>

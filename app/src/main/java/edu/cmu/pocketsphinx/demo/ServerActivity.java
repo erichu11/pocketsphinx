@@ -32,7 +32,7 @@ public class ServerActivity extends Activity {
     boolean recording=false;
 
     RecordAudio recordTask;
-    ServerAction playTask;
+    ServerAction serverTask;
     File recordingFile;
 
     int frequency = 16000,channelConfiguration = AudioFormat.CHANNEL_CONFIGURATION_MONO;
@@ -77,8 +77,8 @@ public class ServerActivity extends Activity {
                         // release
                         recording = false;
 
-                        playTask = new ServerAction();
-                        playTask.execute();
+                        serverTask = new ServerAction();
+                        serverTask.execute();
 
                         return false;
                     }

@@ -9,7 +9,8 @@
         android:text="Offline"
         android:id="@+id/button_offline"
         android:layout_gravity="center_horizontal"
-        android:onClick="offlineMode"/>
+        android:onClick="offlineMode"
+        android:layout_margin="40dip"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -19,11 +20,4 @@
         android:layout_gravity="center_horizontal"
         android:onClick="serverMode"/>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Audio"
-        android:id="@+id/button_audio"
-        android:layout_gravity="center_horizontal"
-        android:onClick="audioMode"/>
 </LinearLayout>
