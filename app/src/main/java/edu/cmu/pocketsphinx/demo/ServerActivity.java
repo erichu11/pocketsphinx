@@ -191,16 +191,16 @@ public class ServerActivity extends Activity {
                 dOut.write(audiodata);           // write the message
                 System.out.println("Sent to server");
                 DataInputStream fromServer = new DataInputStream(socket.getInputStream());
-                String s = fromServer.readUTF();
-                changeText(s);
+                final String s = fromServer.readUTF();
+                runOnUiThread(new Runnable() {
+                    public void run() {
+                        text.setText(s);
+                    }
+                });
             } catch (Throwable t) {
                 Log.e("AudioTrack", "Playback Failed");
             }
             return null;
         }
-    }
-
-    private void changeText(String s){
-        text.setText(s);
     }
 }
