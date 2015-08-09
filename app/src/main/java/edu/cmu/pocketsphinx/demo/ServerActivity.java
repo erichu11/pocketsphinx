@@ -195,7 +195,8 @@ public class ServerActivity extends Activity {
                 }
                 dis.close();
 
-                Socket socket = new Socket("192.168.1.5",7000);
+                //Socket socket = new Socket("192.168.1.5",7000);   //gary's ip
+                Socket socket = new Socket("163.47.105.13",7000);   //eric's ip
                 DataOutputStream dOut = new DataOutputStream(socket.getOutputStream());
 
                 dOut.writeInt(audiodata.length); // write length of the message
