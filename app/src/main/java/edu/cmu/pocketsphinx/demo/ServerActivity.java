@@ -32,6 +32,7 @@ public class ServerActivity extends Activity {
     boolean recording=false;
 
     RecordAudio recordTask;
+    ServerAction playTask;
     File recordingFile;
 
     int frequency = 16000,channelConfiguration = AudioFormat.CHANNEL_CONFIGURATION_MONO;
@@ -75,7 +76,9 @@ public class ServerActivity extends Activity {
                         record.setText("Hold to record");
                         // release
                         recording = false;
-                        Server();
+
+                        playTask = new ServerAction();
+                        playTask.execute();
 
                         return false;
                     }
@@ -166,15 +169,12 @@ public class ServerActivity extends Activity {
         }
     }
 
-    private void Server()  {
-
-
+    private class ServerAction extends AsyncTask<Void, Integer, Void> {
+        @Override
+        protected Void doInBackground(Void... params) {
             byte[] audiodata = new byte[(int)(recordingFile.length())];
-
             try {
                 DataInputStream dis = new DataInputStream(new BufferedInputStream(new FileInputStream(recordingFile)));
-
-
                 while ( dis.available() > 0) {
                     int i = 0;
                     while (dis.available() > 0 && i < audiodata.length) {
@@ -183,7 +183,6 @@ public class ServerActivity extends Activity {
                     }
                 }
                 dis.close();
-
                 //Socket socket = new Socket("192.168.1.5",7000);   //gary's ip
                 Socket socket = new Socket("192.168.1.19",7000);   //eric's ip
                 DataOutputStream dOut = new DataOutputStream(socket.getOutputStream());
@@ -191,17 +190,15 @@ public class ServerActivity extends Activity {
                 dOut.writeInt(audiodata.length); // write length of the message
                 dOut.write(audiodata);           // write the message
                 System.out.println("Sent to server");
-
                 DataInputStream fromServer = new DataInputStream(socket.getInputStream());
                 String s = fromServer.readUTF();
-                text.setText(s);
-
-
-
+                changeText(s);
             } catch (Throwable t) {
                 Log.e("AudioTrack", "Playback Failed");
             }
+            return null;
         }
+    }
 
     private void changeText(String s){
         text.setText(s);
