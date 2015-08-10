@@ -29,6 +29,7 @@ import java.net.Socket;
 public class ServerActivity extends Activity {
     private Button record;
     private TextView text;
+    private TextView recognizing;
     boolean recording=false;
 
     RecordAudio recordTask;
@@ -46,6 +47,7 @@ public class ServerActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_server);
         text=(TextView)this.findViewById(R.id.textview_speech);
+        recognizing=(TextView)this.findViewById(R.id.textview_recognizing);
         record = (Button) this.findViewById(R.id.button_record);
         record.setBackgroundColor(Color.GRAY);
         record.setOnTouchListener(new View.OnTouchListener() {
@@ -172,6 +174,11 @@ public class ServerActivity extends Activity {
     private class ServerAction extends AsyncTask<Void, Integer, Void> {
         @Override
         protected Void doInBackground(Void... params) {
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    recognizing.setText("Recognizing");
+                }
+            });
             byte[] audiodata = new byte[(int)(recordingFile.length())];
             try {
                 DataInputStream dis = new DataInputStream(new BufferedInputStream(new FileInputStream(recordingFile)));
@@ -195,6 +202,7 @@ public class ServerActivity extends Activity {
                 runOnUiThread(new Runnable() {
                     public void run() {
                         text.setText(s);
+                        recognizing.setText(" ");
                     }
                 });
             } catch (Throwable t) {
