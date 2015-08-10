@@ -30,22 +30,23 @@
 
 package edu.cmu.pocketsphinx.demo;
 
-import static android.widget.Toast.makeText;
-import static edu.cmu.pocketsphinx.SpeechRecognizerSetup.defaultSetup;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.HashMap;
-
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+
 import edu.cmu.pocketsphinx.Assets;
 import edu.cmu.pocketsphinx.Hypothesis;
 import edu.cmu.pocketsphinx.RecognitionListener;
 import edu.cmu.pocketsphinx.SpeechRecognizer;
+
+import static android.widget.Toast.makeText;
+import static edu.cmu.pocketsphinx.SpeechRecognizerSetup.defaultSetup;
 
 public class OfflineActivity extends Activity implements
         RecognitionListener {
@@ -54,8 +55,8 @@ public class OfflineActivity extends Activity implements
 
     private static final String DIGITS_SEARCH = "digits";
 
-
-
+    Recognition recognitionTask;
+    private Toast toast;
     private SpeechRecognizer recognizer;
     private HashMap<String, Integer> captions;
 
@@ -73,29 +74,37 @@ public class OfflineActivity extends Activity implements
         // Recognizer initialization is a time-consuming and it involves IO,
         // so we execute it in async task
 
-        new AsyncTask<Void, Void, Exception>() {
-            @Override
-            protected Exception doInBackground(Void... params) {
-                try {
-                    Assets assets = new Assets(OfflineActivity.this);
-                    File assetDir = assets.syncAssets();
-                    setupRecognizer(assetDir);
-                } catch (IOException e) {
-                    return e;
-                }
-                return null;
-            }
+        recognitionTask = new Recognition();
+        recognitionTask.execute();
 
-            @Override
-            protected void onPostExecute(Exception result) {
-                if (result != null) {
-                    ((TextView) findViewById(R.id.caption_text))
-                            .setText("Failed to init recognizer " + result);
-                } else {
-                    switchSearch(DIGITS_SEARCH);
+    }
+
+    private class Recognition extends AsyncTask<Void, Void, Exception> {
+        @Override
+        protected Exception doInBackground(Void... params) {
+            try {
+                Assets assets = new Assets(OfflineActivity.this);
+                File assetDir = assets.syncAssets();
+                setupRecognizer(assetDir);
+                if(isCancelled()){
+
                 }
+
+            } catch (IOException e) {
+                return e;
             }
-        }.execute();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Exception result) {
+            if (result != null) {
+                ((TextView) findViewById(R.id.caption_text))
+                        .setText("Failed to init recognizer " + result);
+            } else {
+                switchSearch(DIGITS_SEARCH);
+            }
+        }
     }
 
     @Override
@@ -103,6 +112,13 @@ public class OfflineActivity extends Activity implements
         super.onDestroy();
         recognizer.cancel();
         recognizer.shutdown();
+
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        recognitionTask.cancel(true);
     }
     
     /**
@@ -129,7 +145,8 @@ public class OfflineActivity extends Activity implements
         ((TextView) findViewById(R.id.result_text)).setText("");
         if (hypothesis != null) {
             String text = hypothesis.getHypstr();
-            makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
+            toast=makeText(getApplicationContext(), text, Toast.LENGTH_SHORT);
+            toast.show();
         }
     }
 
