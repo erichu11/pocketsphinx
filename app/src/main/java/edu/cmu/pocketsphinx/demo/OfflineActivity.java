@@ -33,9 +33,10 @@ package edu.cmu.pocketsphinx.demo;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import android.support.v4.app.NavUtils;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -63,7 +64,7 @@ public class OfflineActivity extends Activity implements
     @Override
     public void onCreate(Bundle state) {
         super.onCreate(state);
-
+        getActionBar().setDisplayHomeAsUpEnabled(true);
         // Prepare the data for UI
         captions = new HashMap<String, Integer>();
         captions.put(DIGITS_SEARCH, R.string.digits_caption);
@@ -78,7 +79,16 @@ public class OfflineActivity extends Activity implements
         recognitionTask.execute();
 
     }
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
     private class Recognition extends AsyncTask<Void, Void, Exception> {
         @Override
         protected Exception doInBackground(Void... params) {
@@ -86,9 +96,6 @@ public class OfflineActivity extends Activity implements
                 Assets assets = new Assets(OfflineActivity.this);
                 File assetDir = assets.syncAssets();
                 setupRecognizer(assetDir);
-                if(isCancelled()){
-
-                }
 
             } catch (IOException e) {
                 return e;
@@ -112,15 +119,10 @@ public class OfflineActivity extends Activity implements
         super.onDestroy();
         recognizer.cancel();
         recognizer.shutdown();
-
     }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        recognitionTask.cancel(true);
-    }
-    
+
+
     /**
      * In partial result we get quick updates about current hypothesis. In
      * keyword spotting mode we can react here, in other modes we need to wait

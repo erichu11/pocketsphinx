@@ -8,5 +8,12 @@
         sha1="9abb9316583beaa841a16f884282af120c5d4aa9">
         <dex dex="C:\Users\Eric\workspace\pocketsphinx-android-demo-master\app\build\intermediates\pre-dexed\debug\pocketsphinx-android-5prealpha-nolib-9103cff6c2c0e0c900812768ad25b3e83c5678db.jar" />
     </item>
+    <item
+        jar="E:\Android\ADT\adt-bundle-windows-x86_64-20140702\sdk\extras\android\m2repository\com\android\support\support-v4\18.0.0\support-v4-18.0.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="44ec51e9d395a47aab135e5e1b556c0007442156">
+        <dex dex="C:\Users\Eric\workspace\pocketsphinx-android-demo-master\app\build\intermediates\pre-dexed\debug\support-v4-18.0.0-a2f44785c675d266a35eb5c263130104f1576346.jar" />
+    </item>
 
 </items>
