@@ -13,7 +13,6 @@
             android:layout_alignParentTop="true"
             android:layout_marginTop="60dip"
             android:textSize="32sp"
-            android:text="Speech"
             android:gravity="center"/>
     </RelativeLayout>
 

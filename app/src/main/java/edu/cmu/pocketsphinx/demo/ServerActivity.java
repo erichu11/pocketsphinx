@@ -39,13 +39,11 @@ public class ServerActivity extends Activity {
 
     RecordAudio recordTask;
     ServerAction serverTask;
+
     File recordingFile;
 
     int frequency = 16000,channelConfiguration = AudioFormat.CHANNEL_CONFIGURATION_MONO;
     int audioEncoding = AudioFormat.ENCODING_PCM_16BIT;
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +61,7 @@ public class ServerActivity extends Activity {
                     case MotionEvent.ACTION_DOWN: {
                         record.setBackgroundColor(Color.LTGRAY);
                         record.setText("Release to end");
+                        text.setText(" ");
                         // press
                         Thread recordThread = new Thread(new Runnable() {
 
@@ -73,10 +72,7 @@ public class ServerActivity extends Activity {
                             }
 
                         });
-
                         recordThread.start();
-
-
                         return true;
                     }
                     case MotionEvent.ACTION_UP: {
@@ -87,7 +83,6 @@ public class ServerActivity extends Activity {
 
                         serverTask = new ServerAction();
                         serverTask.execute();
-
                         return false;
                     }
                     default:
@@ -105,9 +100,7 @@ public class ServerActivity extends Activity {
         } catch (IOException e) {
             throw new RuntimeException("Couldn't create file on SD card", e);
         }
-
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -128,7 +121,6 @@ public class ServerActivity extends Activity {
     }
 
     private void startRecord(){
-
         recordTask = new RecordAudio();
         recordTask.execute();
 
@@ -166,10 +158,6 @@ public class ServerActivity extends Activity {
                 Log.e("AudioRecord", "Recording Failed");
             }
             return null;
-        }
-        protected void onProgressUpdate(Integer... progress) {
-        }
-        protected void onPostExecute(Void result) {
         }
     }
 
