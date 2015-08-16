@@ -1,10 +1,13 @@
 package edu.cmu.pocketsphinx.demo;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Color;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
@@ -16,6 +19,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -172,41 +176,64 @@ public class ServerActivity extends Activity {
     private class ServerAction extends AsyncTask<Void, Integer, Void> {
         @Override
         protected Void doInBackground(Void... params) {
-            runOnUiThread(new Runnable() {
-                public void run() {
-                    recognizing.setText("Recognizing");
-                }
-            });
-            byte[] audiodata = new byte[(int)(recordingFile.length())];
-            try {
-                DataInputStream dis = new DataInputStream(new BufferedInputStream(new FileInputStream(recordingFile)));
-                while ( dis.available() > 0) {
-                    int i = 0;
-                    while (dis.available() > 0 && i < audiodata.length) {
-                        audiodata[i] = dis.readByte();
-                        i++;
-                    }
-                }
-                dis.close();
-                //Socket socket = new Socket("192.168.1.5",7000);   //gary's ip
-                Socket socket = new Socket("192.168.1.19",7000);   //eric's ip
-                DataOutputStream dOut = new DataOutputStream(socket.getOutputStream());
-
-                dOut.writeInt(audiodata.length); // write length of the message
-                dOut.write(audiodata);           // write the message
-                System.out.println("Sent to server");
-                DataInputStream fromServer = new DataInputStream(socket.getInputStream());
-                final String s = fromServer.readUTF();
+            if(isNetworkConnected()==true){
                 runOnUiThread(new Runnable() {
                     public void run() {
-                        text.setText(s);
-                        recognizing.setText(" ");
+                        recognizing.setText("Recognizing");
                     }
                 });
-            } catch (Throwable t) {
-                Log.e("AudioTrack", "Playback Failed");
+                byte[] audiodata = new byte[(int)(recordingFile.length())];
+                try {
+                    DataInputStream dis = new DataInputStream(new BufferedInputStream(new FileInputStream(recordingFile)));
+                    while ( dis.available() > 0) {
+                        int i = 0;
+                        while (dis.available() > 0 && i < audiodata.length) {
+                            audiodata[i] = dis.readByte();
+                            i++;
+                        }
+                    }
+                    dis.close();
+                    //Socket socket = new Socket("192.168.1.5",7000);   //gary's ip
+                    Socket socket = new Socket("104.44.132.207",7000);   //eric's ip
+                    DataOutputStream dOut = new DataOutputStream(socket.getOutputStream());
+
+                    dOut.writeInt(audiodata.length); // write length of the message
+                    dOut.write(audiodata);           // write the message
+                    System.out.println("Sent to server");
+                    DataInputStream fromServer = new DataInputStream(socket.getInputStream());
+                    final String s = fromServer.readUTF();
+                    runOnUiThread(new Runnable() {
+                        public void run() {
+                            text.setText(s);
+                            recognizing.setText(" ");
+                        }
+                    });
+                } catch (Throwable t) {
+                    Log.e("AudioTrack", "Playback Failed");
+                }
+            }else{
+                runOnUiThread(new Runnable() {
+                    public void run() {
+                        Context context = getApplicationContext();
+                        CharSequence text = "Network not available!";
+                        int duration = Toast.LENGTH_SHORT;
+
+                        Toast toast = Toast.makeText(context, text, duration);
+                        toast.show();
+                    }
+                });
             }
             return null;
         }
+    }
+
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo ni = cm.getActiveNetworkInfo();
+        if (ni == null) {
+            // There are no active networks.
+            return false;
+        } else
+            return true;
     }
 }
