@@ -12,6 +12,14 @@ grammar digits;
           six   |
           seven |
           eight |
-          nine  ;
+          nine  |
+          ten   |
+          hello |
+          bye   |
+          morning|
+          yes   |
+          no    |
+          good  |
+          hi;
 
-public <digits> = <digit>;
+public <digits> = <digit>+;

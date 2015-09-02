@@ -3,7 +3,7 @@
 
     <string name="app_name">Sphinx</string>
 
-    <string name="digits_caption">Say the numbers 0-9</string>
+    <string name="digits_caption">Say Some Words</string>
     <string name="title_activity_main">MainActivity</string>
 
     <string name="hello_world">Hello world!</string>
