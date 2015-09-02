@@ -2,18 +2,32 @@
 <items version="2" >
 
     <item
-        jar="C:\Users\Eric\workspace\pocketsphinx-android-demo-master\app\libs\pocketsphinx-android-5prealpha-nolib.jar"
+        jar="/Users/shenghaolu/Documents/Sphinx/pocketsphinx/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.1/libs/internal_impl-22.2.1.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="c471eaaba13ff64f6e0383d1c30a9cdc9a97efeb">
+        <dex dex="/Users/shenghaolu/Documents/Sphinx/pocketsphinx/app/build/intermediates/pre-dexed/debug/internal_impl-22.2.1-1377139e79fbc032f87f868df36bcc001a06e809.jar" />
+    </item>
+    <item
+        jar="/Users/shenghaolu/Documents/Sphinx/pocketsphinx/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.1/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="f8efd0096475e0daf054267b61544e10dc776503">
+        <dex dex="/Users/shenghaolu/Documents/Sphinx/pocketsphinx/app/build/intermediates/pre-dexed/debug/classes-a968502baa72beba373cb9ad8137c7f8e244b6c2.jar" />
+    </item>
+    <item
+        jar="/Users/shenghaolu/Documents/Android SDK/sdk/extras/android/m2repository/com/android/support/support-annotations/22.2.1/support-annotations-22.2.1.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="61a0ff5c29295ec56d7e0bd3d25d95dbf71b4b2b">
+        <dex dex="/Users/shenghaolu/Documents/Sphinx/pocketsphinx/app/build/intermediates/pre-dexed/debug/support-annotations-22.2.1-3cf6e81aba8a6750704ccdabde202639ab42693d.jar" />
+    </item>
+    <item
+        jar="/Users/shenghaolu/Documents/Sphinx/pocketsphinx/app/libs/pocketsphinx-android-5prealpha-nolib.jar"
         jumboMode="false"
         revision="22.0.1"
         sha1="9abb9316583beaa841a16f884282af120c5d4aa9">
-        <dex dex="C:\Users\Eric\workspace\pocketsphinx-android-demo-master\app\build\intermediates\pre-dexed\debug\pocketsphinx-android-5prealpha-nolib-9103cff6c2c0e0c900812768ad25b3e83c5678db.jar" />
-    </item>
-    <item
-        jar="E:\Android\ADT\adt-bundle-windows-x86_64-20140702\sdk\extras\android\m2repository\com\android\support\support-v4\18.0.0\support-v4-18.0.0.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="44ec51e9d395a47aab135e5e1b556c0007442156">
-        <dex dex="C:\Users\Eric\workspace\pocketsphinx-android-demo-master\app\build\intermediates\pre-dexed\debug\support-v4-18.0.0-a2f44785c675d266a35eb5c263130104f1576346.jar" />
+        <dex dex="/Users/shenghaolu/Documents/Sphinx/pocketsphinx/app/build/intermediates/pre-dexed/debug/pocketsphinx-android-5prealpha-nolib-bcc31fba14e494a52e02ab436af2a7965b8e9bc2.jar" />
     </item>
 
 </items>

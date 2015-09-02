@@ -13,6 +13,7 @@ grammar digits;
           seven |
           eight |
           nine  |
+<<<<<<< Updated upstream
           ten   |
           hello |
           bye   |
@@ -21,5 +22,13 @@ grammar digits;
           no    |
           good  |
           hi;
+=======
+          hello |
+          hi    |
+          apple |
+          banana|
+          pear  
+          ;
+>>>>>>> Stashed changes
 
 public <digits> = <digit>+;
